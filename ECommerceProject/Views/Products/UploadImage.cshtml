@@ -1,0 +1,26 @@
+﻿@model ECommerceProject.Models.Product
+@{
+    ViewData["Title"] = "Upload Image";
+}
+
+<h2 class="alert alert-success">Upload Product Image</h2>
+
+<h4 class="text-primary">@ViewBag.msg</h4>
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="UploadImage" enctype="multipart/form-data" method="post">
+                <input type="hidden" asp-for="Id" />
+                <label>Upload Product Image</label>
+                <input type="file" name="filetoupload" class="form-control" value="" />
+                <button type="submit" class="mt-2 btn btn-success">Upload Product Image</button>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <h5 class="alert alert-danger"> Sorry ! Requested product is not a valid product</h5>
+}

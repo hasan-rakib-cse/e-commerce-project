@@ -15,7 +15,7 @@
 <body>
 
     <!-- Header -->
-    <header>
+    <header class="d-print-none">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white box-shadow">
             <div class="container-fluid">
                 <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">E-Commerce</a>
@@ -37,12 +37,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="ShoppingCart">Cart</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="FileUpload" asp-action="Index">File Upload</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="FileUpload" asp-action="ShowFile">Show Files</a>
-                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -51,7 +45,7 @@
     </header>
     <!-- Header End -->
     <!-- Search -->
-    <div class="container main-search">
+    <div class="container main-search d-print-none">
         <div class="row">
             <div class="col-md-6 mx-auto my-3">
                 <div class="search-with-box">
@@ -210,7 +204,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted d-print-none">
         <div class="container">
             <span class="fw-bold" style="color: #67bccd;">&copy;</span> 2024 - ECommerceProject
         </div>

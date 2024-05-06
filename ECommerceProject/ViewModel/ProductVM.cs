@@ -22,8 +22,12 @@ namespace ECommerceProject.ViewModel
         public decimal SubTotal { get; set; }
         [NotMapped]
         public string ProductName { get; set; }
+
         [NotMapped]
         public string UnitName { get; set; }
+
+        [NotMapped]
+        public string Image { get; set; }
 
         [NotMapped]
         public string ConfigarationName { get; set; }

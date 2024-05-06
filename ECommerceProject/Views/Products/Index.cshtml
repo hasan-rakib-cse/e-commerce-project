@@ -27,7 +27,7 @@
                 <th style="min-width: 200px; max-width: 300px; width: max-content;">
                     @Html.DisplayNameFor(model => model.ProductModel)
                 </th>
-                <th style="min-width: 200px; max-width: 500px; width: max-content;">Action</th>
+                <th style="min-width: 300px; max-width: 500px; width: max-content;">Action</th>
                 <th style="min-width: 500px; max-width: 1000px; width: max-content;">
                     @Html.DisplayNameFor(model => model.Configaration)
                 </th>
@@ -59,6 +59,7 @@
                         <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                         <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
                         <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a class="btn btn-sm btn-primary" asp-action="UploadImage" asp-route-id="@item.Id"> Upload Image</a>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Configaration.ConfigarationName)

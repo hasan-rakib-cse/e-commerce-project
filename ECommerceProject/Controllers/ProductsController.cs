@@ -13,10 +13,12 @@ namespace ECommerceProject.Controllers
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _whe;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(ApplicationDbContext context, IWebHostEnvironment whe)
         {
             _context = context;
+            _whe = whe;
         }
 
         // GET: Products
@@ -184,5 +186,95 @@ namespace ECommerceProject.Controllers
         {
             return _context.Product.Any(e => e.Id == id);
         }
+
+        #region .........:::: Custom Code Block ::::.........
+
+        public async Task<IActionResult> UploadImage(int id)
+        {
+            if (id <= 0) { return NotFound(); }
+
+            var product = await _context.Product.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadImage(int id, IFormFile filetoupload)
+        {
+            if(id <= 0) { return NotFound(); }
+
+            var product = await _context.Product.FindAsync(id);
+            if(product == null)
+            {
+                return NotFound();
+            }
+
+            string msg = "";
+
+            if (filetoupload != null)
+            {
+                if(filetoupload.Length > 0)
+                {
+                    string ext = Path.GetExtension(filetoupload.FileName);
+                    if(ext == ".jpg" || ext == ".jpeg" || ext == ".png" || ext == ".gif" || ext == ".webp")
+                    {
+                        string folder = "images/UploadedImages";
+                        string webroot = _whe.WebRootPath;
+                        string filename = Path.GetFileName(filetoupload.FileName);
+
+                        string file_code = getImageName(id);
+                        string fs = Path.Combine(webroot, folder, file_code+ext);
+
+                        using (var stream = new FileStream(fs, FileMode.Create))
+                        {
+                            await filetoupload.CopyToAsync(stream);
+                            msg = "File Has Been Uploaded Successfully";
+                        }
+
+                        ProductImage p = new ProductImage();
+                        p.ProductId = id;
+                        p.ImageName = filename;
+                        p.ImageCode = file_code + ext;
+                        p.ImageExtension = ext;
+
+                        _context.ProductImage.Add(p);
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        msg = "File Extension/ Format is not Allowed to Upload";
+                    }
+                }
+                else
+                {
+                    msg = "File Size Could Not be Zero";
+                }
+            }
+            else
+            {
+                msg = "Please Select a File to Upload";
+            }
+            ViewBag.msg = msg;
+            return View(product);
+
+        }
+
+
+        // For different image name according to product id
+        private string getImageName(int id)
+        {
+            int count_image = _context.ProductImage.Where(x => x.ProductId == id).Count();
+            string imgname = "PIMG" + id.ToString().Trim().PadLeft(12, 'X') + (count_image + 1).ToString().Trim().PadLeft(2, '0');
+            return imgname;
+        }
+
+
+
+
+        #endregion
+
     }
 }

@@ -24,7 +24,7 @@ namespace ECommerceProject.Controllers
             var extcart = HttpContext.Session.GetObject<Cart>("mycart");
             if (extcart == null)
             {
-                var prod = _context.Product.Include(m=>m.Unit).Include(m=> m.Configaration).FirstOrDefault(x => x.Id == pid);
+                var prod = _context.Product.Include(m=>m.Unit).Include(m=> m.Configaration).Include(x => x.ProductImages).FirstOrDefault(x => x.Id == pid);
                 if (prod != null)
                 {
                     ProductVM p = new ProductVM();
@@ -32,6 +32,7 @@ namespace ECommerceProject.Controllers
                     p.ProductName = prod.ProductName;
                     p.UnitId = prod.UnitId;
                     p.UnitName = prod.Unit.UnitName;
+                    p.Image = prod.ProductImages[0].ImageCode;
                     p.ConfigarationId = prod.ConfigarationId;
                     p.ConfigarationName = prod.Configaration.ConfigarationName;
                     p.SaleQuantity = (decimal)qty;
@@ -50,7 +51,7 @@ namespace ECommerceProject.Controllers
             }
             else
             {
-                var prod1 = _context.Product.Include(m => m.Unit).Include(m => m.Configaration).FirstOrDefault(x => x.Id == pid);
+                var prod1 = _context.Product.Include(m => m.Unit).Include(m => m.Configaration).Include(x => x.ProductImages).FirstOrDefault(x => x.Id == pid);
                 if (prod1 != null)
                 {
                     var prod2 = extcart.Products.FirstOrDefault(x => x.ProductId == pid);
@@ -61,6 +62,7 @@ namespace ECommerceProject.Controllers
                         p.ProductName = prod1.ProductName;
                         p.UnitId = prod1.UnitId;
                         p.UnitName = prod1.Unit.UnitName;
+                        p.Image = prod1.ProductImages[0].ImageCode;
                         p.ConfigarationId = prod1.ConfigarationId;
                         p.ConfigarationName = prod1.Configaration.ConfigarationName;
                         p.SaleQuantity = (decimal)qty;
