@@ -1,0 +1,174 @@
+﻿@model IEnumerable<ECommerceProject.ViewModel.ProductVM>
+@{
+    ViewData["Title"] = "ShoppingCart";
+
+    decimal total = 0;
+    decimal tax = 0;
+    decimal tax_factor = (decimal)0.0125;
+}
+
+<!-- breadcum start -->
+<div class="breadcum">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex align-items-center gap-2">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" style="font-size: 20px; color: #67bccd"><i class="las la-home"></i></a>
+                    <span style="font-size: 14px; color: #67bccd"><i class="las la-chevron-right"></i></span>
+                    <p class="mb-0" style="font-size: 16px;">Shopping Cart</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcum end -->
+<!-- cart wrapper start -->
+<div class="shop-cart mt-4">
+    <div class="container">
+        <div class="row">
+            <!-- product card start -->
+            <div class="col-md-9">
+                <div class="shop_cart_wrap">
+
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            item.SubTotal = item.UnitPrice * item.SaleQuantity;
+                            total = total + item.SubTotal;
+                            tax = total * tax_factor;
+
+                            <!-- single cart -->
+                            <div class="single_shop_cart mb-4">
+
+                                <!-- cart image -->
+                                <div class="cart_img mb-4 mb-md-0"><img loading="lazy" src="~/images/products/product9.jpg" alt="product"></div>
+
+                                <!-- cart content -->
+                                <div class="cart_content">
+                                    <a asp-area="" asp-controller="Product" asp-action="ProductView"><h5>@item.ProductName</h5></a>
+                                    <p class="price">BDT @item.UnitPrice</p>
+                                    <p class="size">Conf: <span class="text-warning ms-1">@item.ConfigarationName</span></p>
+                                </div>
+
+                                <!-- cart quantity -->
+                                <div class="cart_qnty">
+                                    <button class="cart_qnty_btn minus" data-pid="@item.ProductId"><i class="las la-minus"></i></button>
+                                    <div class="cart_count">@item.SaleQuantity</div>
+                                    <button class="cart_qnty_btn plus" data-pid="@item.ProductId"><i class="las la-plus"></i></button>
+                                </div>
+
+                                <!-- cart price -->
+                                <div class="cart_price ms-auto"><p>BDT @item.SubTotal</p></div>
+
+                                <!-- cart remove icon -->
+                                <div class="cart_remove ms-auto" data-pid="@item.ProductId"><i class="las la-trash"></i></div>
+
+                            </div>
+                        }
+                    }
+
+                </div>
+
+            </div>
+            <!-- product card end -->
+            <!-- order summary -->
+            <div class="col-md-3">
+                <div class="cart_summary">
+                    <h4>Order Summary</h4>
+                    <div class="cartsum_text">
+                        <p style="font-weight: 500;">Total</p>
+                        <p style="font-weight: 500;">BDT @(Math.Ceiling(total))</p>
+                    </div>
+                    <div class="cartsum_text">
+                        <p>Delivery</p>
+                        <p>Free</p>
+                    </div>
+                    <div class="cartsum_text">
+                        <p>Tax</p>
+                        <p>BDT @(Math.Ceiling(tax))</p>
+                    </div>
+                    <div class="cart_sum_total">
+                        <p>Sub-Total</p>
+                        <p>BDT @(Math.Ceiling(total + (total * tax_factor)))</p>
+                    </div>
+                    <div class="cart_sum_pros_btn">
+                        <a asp-area="" asp-controller="Cart" asp-action="Checkout" class="default_btn1 text-uppercase" style="font-weight: 500;">Proccees to checkout</a>
+                    </div>
+                </div>
+            </div>
+            <!-- order summary end -->
+        </div>
+    </div>
+</div>
+<!-- card wrapper end -->
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $('.cart_remove').on('click', function () {
+                let pid = $(this).data('pid');
+
+                //alert('Clicked ' + pid);
+
+                $.ajax({
+                    url: '/Cart/RemoveItem',
+                    method: 'POST',
+                    cache: false,
+                    data: { 'pid': pid },
+                    dataType: 'JSON',
+                    success: function (mydata) {
+                        console.log('Remove Successful : ' + pid);
+                        window.location.href = '/Cart/ShoppingCart';
+                    },
+                    error: function (err) {
+                        console.log('Failed');
+                    }
+                });
+            });
+
+            $('.plus').on('click', function () {
+                let pid = $(this).data('pid');
+
+                //alert('Clicked ' + pid);
+
+                $.ajax({
+                    url: '/Cart/IncreaseItem',
+                    method: 'POST',
+                    cache: false,
+                    data: { 'pid': pid },
+                    dataType: 'JSON',
+                    success: function (mydata) {
+                        console.log('Increase Successful : ' + pid);
+                        window.location.href = '/Cart/ShoppingCart';
+                    },
+                    error: function (err) {
+                        console.log('Failed');
+                    }
+                });
+            });
+
+            $('.minus').on('click', function () {
+                let pid = $(this).data('pid');
+
+                //alert('Clicked ' + pid);
+
+                $.ajax({
+                    url: '/Cart/DecreaseItem',
+                    method: 'POST',
+                    cache: false,
+                    data: { 'pid': pid },
+                    dataType: 'JSON',
+                    success: function (mydata) {
+                        console.log('Increase Successful : ' + pid);
+                        window.location.href = '/Cart/ShoppingCart';
+                    },
+                    error: function (err) {
+                        console.log('Failed');
+                    }
+                });
+            });
+
+        });
+    </script>
+}

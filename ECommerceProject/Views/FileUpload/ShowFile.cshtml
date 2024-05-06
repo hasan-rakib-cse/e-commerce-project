@@ -1,0 +1,31 @@
+﻿@model IEnumerable<string>
+@{
+    ViewData["Title"] = "Show File";
+}
+
+<h2 class="alert alert-info">ShowFile</h2>
+
+<div class="row">
+    @if(Model != null)
+    {
+        foreach (var item in Model)
+        {
+            string ext = System.IO.Path.GetExtension(item);
+            string fn = System.IO.Path.GetFileName(item);
+
+            <div class="col-md-2 mb-4">
+                @if (ext == ".jpg" || ext == ".png" || ext == ".gif" || ext == ".jpeg" || ext == ".webp")
+                {
+                    <div class="border border-1 border-secondary">
+                        <img src="~/images/products/@fn" style="width: 100%" ; height="150px" />
+                    </div>
+                }
+                else
+                {
+                    <label>File is not an image</label>
+                }
+            </div>
+
+        }
+    }
+</div>

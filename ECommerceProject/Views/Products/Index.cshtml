@@ -1,0 +1,73 @@
+﻿@model IEnumerable<ECommerceProject.Models.Product>
+
+@{
+    ViewData["Title"] = "Product";
+}
+
+<h1>Product</h1>
+
+<p><a class="btn btn-primary" asp-action="Create">Create New</a></p>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-primary">
+            <tr style="vertical-align: middle">
+                <th style="min-width: 300px; max-width: 500px; width: max-content;">
+                    @Html.DisplayNameFor(model => model.ProductName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SalePrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VAT)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SubCategory)
+                </th>
+                <th style="min-width: 200px; max-width: 300px; width: max-content;">
+                    @Html.DisplayNameFor(model => model.ProductModel)
+                </th>
+                <th style="min-width: 200px; max-width: 500px; width: max-content;">Action</th>
+                <th style="min-width: 500px; max-width: 1000px; width: max-content;">
+                    @Html.DisplayNameFor(model => model.Configaration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr style="vertical-align: middle">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SalePrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VAT)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SubCategory.SubCategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductModel.ModelName)
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Configaration.ConfigarationName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

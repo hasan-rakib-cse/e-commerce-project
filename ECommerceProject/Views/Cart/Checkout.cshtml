@@ -1,0 +1,135 @@
+﻿@model IEnumerable<ECommerceProject.ViewModel.ProductVM>
+@{
+    ViewData["Title"] = "Checkout";
+    decimal total = 0;
+    decimal tax = 0;
+    decimal tax_factor = (decimal)0.0125;
+}
+
+<!-- breadcum start -->
+<div class="breadcum">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex align-items-center gap-2">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" style="font-size: 20px; color: #67bccd"><i class="las la-home"></i></a>
+                    <span style="font-size: 14px; color: #67bccd"><i class="las la-chevron-right"></i></span>
+                    <p class="mb-0" style="font-size: 16px;">Checkout</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcum end -->
+
+<!-- checkout start -->
+<form asp-action="Placeorder" method="post">
+    <div class="checkout">
+        <div class="container">
+            <div class="row">
+
+                <!-- checkout form -->
+                <div class="col-md-8">
+                    <h4 class="checkout_cart_title mb-4 ps-3">Billing details</h4>
+                    <div class="checkout_form">
+                        <div class="billing_form">
+                            <div class="row gy-3">
+                                <div class="col-lg-12">
+                                    <div class="single_billing_inp">
+                                        <label for="full_name">Full Name <span>*</span></label>
+                                        <input type="text" id="full_name" name="custname">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="single_billing_inp">
+                                        <label for="phone_number">Phone Number <span>*</span></label>
+                                        <input type="text" id="phone_number" name="custmobile">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="single_billing_inp">
+                                        <label for="email_addr">Email Address <span>*</span></label>
+                                        <input type="text" id="email_addr" name="custemail">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="single_billing_inp">
+                                        <label for="street_addr">Address <span>*</span></label>
+                                        <input type="text" id="street_addr" name="custaddress">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- checkout form end -->
+                <!-- sidebar -->
+                <div class="col-md-4">
+                    <h4 class="checkout_cart_title ps-3">Your order</h4>
+                    <div class="checkout_order">
+                        <h4>product</h4>
+
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                item.SubTotal = item.UnitPrice * item.SaleQuantity;
+                                total = total + item.SubTotal;
+                                tax = total * tax_factor;
+
+                                <div class="single_check_order">
+                                    <div class="checkorder_cont">
+                                        <h5>@item.ProductName</h5>
+                                        <p>
+                                            <span>Price: @(Math.Ceiling(item.UnitPrice))</span>
+                                            <span>Unit: @item.UnitName</span>
+                                        </p>
+                                    </div>
+                                    <p class="checkorder_qnty">x-@item.SaleQuantity</p>
+                                    <p class="checkorder_price">BDT @(Math.Ceiling(item.SubTotal))</p>
+                                </div>
+                            }
+                        }
+
+                        <div class="single_check_order subs">
+                            <div class="checkorder_cont subtotal-h">
+                                <h5>Subtotal</h5>
+                            </div>
+                            <p class="checkorder_price">@(Math.Ceiling(total))</p>
+                        </div>
+                        <div class="single_check_order subs">
+                            <div class="checkorder_cont subtotal-h">
+                                <h5>Shipping</h5>
+                            </div>
+                            <p class="checkorder_price" style="color: green;">Free</p>
+                        </div>
+                        <div class="single_check_order subs">
+                            <div class="checkorder_cont subtotal-h">
+                                <h5>Vat</h5>
+                            </div>
+                            <p class="checkorder_price">BDT @(Math.Ceiling(tax))</p>
+                        </div>
+                        <div class="single_check_order total">
+                            <div class="checkorder_cont">
+                                <h5>Total</h5>
+                            </div>
+                            <p class="checkorder_price fw-bold">BDT @(Math.Ceiling(total + tax))</p>
+                        </div>
+                        <div class="checkorder_agree">
+                            <input type="checkbox" class="check_inp" id="save-default">
+                            <label for="save-default">Agree to our <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-color">terms &amp; conditions</a></label>
+                        </div>
+
+                        <div class="checkorder_btn">
+                            @* <a href="#" class="default_btn1 text-uppercase" style="font-weight: 500;">Place Order</a> *@
+                            <button type="submit" class="default_btn1 text-uppercase" style="font-weight: 500;">Place Order</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- sidebar end -->
+
+            </div>
+        </div>
+    </div>
+</form>
+<!-- checkout end -->
