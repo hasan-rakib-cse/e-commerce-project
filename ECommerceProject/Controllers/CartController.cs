@@ -258,7 +258,7 @@ namespace ECommerceProject.Controllers
                     d.SalesOrderId = so.Id;
                     d.SubTotal = item.SaleQuantity * item.UnitPrice;
 
-                    total += item.SubTotal;
+                    total += d.SubTotal;
 
                     _context.SaleDetails.Add(d);
                 }

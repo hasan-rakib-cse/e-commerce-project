@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ECommerceProject</title>
+
     <!-- Line Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -11,6 +12,28 @@
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ECommerceProject.styles.css" asp-append-version="true" />
+    <style>
+        .dropdown-submenu {
+            position: relative;
+        }
+
+            .dropdown-submenu .dropdown-menu {
+                top: 0;
+                left: 100%;
+                margin-top: -6px;
+                margin-left: 0;
+                border-radius: 0.25rem;
+                display: none;
+            }
+
+            .dropdown-submenu:hover .dropdown-menu {
+                display: block;
+            }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
@@ -36,6 +59,163 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="ShoppingCart">Cart</a>
+                        </li>
+                        @* <li class="nav-item dropdown">
+                            <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Settings
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li> *@
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Settings
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @* <li>
+                                    <a class="dropdown-item" href="#">Submenu 1-1</a>
+                                </li> *@
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Brand
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="brands" asp-action="index">Brand List</a></li>
+                                        <li><a class="dropdown-item" asp-controller="brands" asp-action="create">Create Brand</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Model
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="productmodels" asp-action="index">Model List</a></li>
+                                        <li><a class="dropdown-item" asp-controller="productmodels" asp-action="create">Create Model</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Category
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="categories" asp-action="index">Category List</a></li>
+                                        <li><a class="dropdown-item" asp-controller="categories" asp-action="create">Create Category</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Sub-Category
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="subcategories" asp-action="index">Sub-Category List</a></li>
+                                        <li><a class="dropdown-item" asp-controller="subcategories" asp-action="create">Create Sub-Category</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Unit
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="units" asp-action="index">Unit List</a></li>
+                                        <li><a class="dropdown-item" asp-controller="units" asp-action="create">Create Unit</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Configuration
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="configarations" asp-action="index">Configuration List</a></li>
+                                        <li><a class="dropdown-item" asp-controller="configarations" asp-action="create">Create Configuration</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Customer
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="customers" asp-action="index">Customer List</a></li>
+                                        <li><a class="dropdown-item" asp-controller="customers" asp-action="create">Create Customer</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Isolate File
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="fileupload" asp-action="index">File Uploadt</a></li>
+                                        <li><a class="dropdown-item" asp-controller="fileupload" asp-action="showfile">Show Uploaded File</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Product
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="products" asp-action="index">Product List</a></li>
+                                        <li><a class="dropdown-item" asp-controller="products" asp-action="create">Create Product</a></li>
+                                        <li><a class="dropdown-item" asp-controller="productimages" asp-action="index">Product Images</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Sales Order
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="salesorder" asp-action="index">Sales Order List</a></li>
+                                        <li><a class="dropdown-item" asp-controller="salesorder" asp-action="create">Create Sales Order</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Sales Details
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="saledetails" asp-action="index">Purchase Order List</a></li>
+                                        <li><a class="dropdown-item" asp-controller="saledetails" asp-action="create">Create Purchase Order</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Purchase Order
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="purchaseorders" asp-action="index">Purchase Order List</a></li>
+                                        <li><a class="dropdown-item" asp-controller="purchaseorders" asp-action="create">Create Purchase Order</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Purchase Details
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="purchasedetails" asp-action="index">Purchase Order List</a></li>
+                                        <li><a class="dropdown-item" asp-controller="purchasedetails" asp-action="create">Create Purchase Order</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Stocks
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="stocks" asp-action="index">Stock List</a></li>
+                                        <li><a class="dropdown-item" asp-controller="stocks" asp-action="create">Create Stock</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Vendor
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="vendors" asp-action="index">Vendor List</a></li>
+                                        <li><a class="dropdown-item" asp-controller="vendors" asp-action="create">Create Vendor</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -186,7 +366,7 @@
                                         </span>
                                     </a>
                                 </li>
-                            
+
                             </ul>
                         </div>
                     </div>

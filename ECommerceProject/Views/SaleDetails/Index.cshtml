@@ -7,7 +7,7 @@
 <h1>Sale Details</h1>
 
 <p><a class="btn btn-primary" asp-action="Create">Create New</a></p>
-<table class="table">
+<table class="table table-responsive">
     <thead>
         <tr>
             <th>
@@ -17,7 +17,7 @@
                 @Html.DisplayNameFor(model => model.SaleQuantity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SalesOrder)
+                @Html.DisplayNameFor(model => model.SalesOrderId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Product)
@@ -38,7 +38,7 @@
                 @Html.DisplayFor(modelItem => item.SaleQuantity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SalesOrder.InvoiceNumber)
+                    @Html.DisplayFor(modelItem => item.SalesOrderId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Product.ProductCode)
