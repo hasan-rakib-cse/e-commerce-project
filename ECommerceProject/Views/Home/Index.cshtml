@@ -3,6 +3,70 @@
     ViewData["Title"] = "Home Page";
 }
 
+
+
+<!-- Popular Product -->
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="new_arrival py-4">
+        <div class="container pb-12 md:pb-16">
+            <h5 class="text-uppercase mb-4 fw-bold text-sm"> Popular Products </h5>
+            <!-- product grid start -->
+            <div class="row gx-4 gy-4">
+
+                @foreach (var item in Model)
+                {
+                    <!-- single product -->
+                    <div class="col-md-3">
+                        <div class=" single_arrival bg-white shadow rounded-2 overflow-hidden">
+                            <!-- product image -->
+                            <div class="new_arriv_img position-relative">
+                                @* <img src="~/images/products/product9.jpg" alt=""> *@
+                                @if (item.ProductImages != null && item.ProductImages.Count() > 0)
+                                {
+                                    <img src="~/images/UploadedImages/@item.ProductImages[0].ImageCode" alt="@item.ProductName" />
+                                }
+                                else
+                                {
+                                    <img src="~/images/products/product9.jpg" alt="">
+                                }
+
+                                <div class="prodcut_hovcont">
+                                    <a target="_blank" class="search_icon" asp-area="" asp-controller="Product" asp-action="ProductView">
+                                        <i class="las la-search"></i>
+                                    </a>
+                                    <a class="love_icon" asp-area="" asp-controller="Cart" asp-action="WishList">
+                                        <i class="lar la-heart"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- product image end -->
+                            <!-- product content -->
+                            <div class="pt-4 pb-3 px-3">
+                                <a target="_blank" asp-area="" asp-controller="Product" asp-action="ProductView">
+                                    <h5 class="product_title text-lg mb-2 text-black">@item.ProductName</h5>
+                                </a>
+                                <h6 class="text-sm fst-italic" style="color: #cf1010">@item.Configaration.ConfigarationName</h6>
+                                <div class="d-flex align-items-baseline mb-1 gap-2 font-roboto">
+                                    <p class="fw-bold" style="font-size: 16px; color: #67bccd">BDT @item.SalePrice</p>
+                                    <p class="text-decoration-line-through" style="font-size: 13px; color: #9ca3af">BDT @item.DiscountAmount</p>
+                                </div>
+                            </div>
+                            <button type="button" class="default_btn1 a2cart" data-pid="@item.Id" data-qty="1">Add to cart</button>
+                            <!-- product content end -->
+                        </div>
+                    </div>
+                    <!-- single product end -->
+                }
+            </div>
+            <!-- product grid end -->
+
+        </div>
+    </div>
+
+}
+<!-- Popular Product End -->
+
 <!-- Shop By Category -->
 <div class="shop_category py-4">
     <div class="container">
@@ -224,69 +288,6 @@
     </div>
 </div>
 <!-- Top New Arrival Product End -->
-
-<!-- Popular Product -->
-@if (Model != null && Model.Count() > 0)
-{
-
-    <div class="new_arrival py-4">
-        <div class="container pb-12 md:pb-16">
-            <h5 class="text-uppercase mb-4 fw-bold text-sm"> Popular Products </h5>
-            <!-- product grid start -->
-            <div class="row gx-4 gy-4">
-
-                @foreach (var item in Model)
-                {
-                    <!-- single product -->
-                    <div class="col-md-3">
-                        <div class=" single_arrival bg-white shadow rounded-2 overflow-hidden">
-                            <!-- product image -->
-                            <div class="new_arriv_img position-relative">
-                                @* <img src="~/images/products/product9.jpg" alt=""> *@
-                                @if(item.ProductImages != null && item.ProductImages.Count() > 0)
-                                {
-                                    <img src="~/images/UploadedImages/@item.ProductImages[0].ImageCode" alt="@item.ProductName" />
-                                }
-                                else
-                                {
-                                    <img src="~/images/products/product9.jpg" alt="">
-                                }
-
-                                <div class="prodcut_hovcont">
-                                    <a target="_blank" class="search_icon" asp-area="" asp-controller="Product" asp-action="ProductView">
-                                        <i class="las la-search"></i>
-                                    </a>
-                                    <a class="love_icon" asp-area="" asp-controller="Cart" asp-action="WishList">
-                                        <i class="lar la-heart"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- product image end -->
-                            <!-- product content -->
-                            <div class="pt-4 pb-3 px-3">
-                                <a target="_blank" asp-area="" asp-controller="Product" asp-action="ProductView">
-                                    <h5 class="product_title text-lg mb-2 text-black">@item.ProductName</h5>
-                                </a>
-                                <h6 class="text-sm fst-italic" style="color: #cf1010">@item.Configaration.ConfigarationName</h6>
-                                <div class="d-flex align-items-baseline mb-1 gap-2 font-roboto">
-                                    <p class="fw-bold" style="font-size: 16px; color: #67bccd">BDT @item.SalePrice</p>
-                                    <p class="text-decoration-line-through" style="font-size: 13px; color: #9ca3af">BDT @item.DiscountAmount</p>
-                                </div>
-                            </div>
-                            <button type="button" class="default_btn1 a2cart" data-pid="@item.Id" data-qty="1">Add to cart</button>
-                            <!-- product content end -->
-                        </div>
-                    </div>
-                    <!-- single product end -->
-                }
-            </div>
-            <!-- product grid end -->
-
-        </div>
-    </div>
-
-}
-<!-- Popular Product End -->
 
 @section Scripts {
     <script>
