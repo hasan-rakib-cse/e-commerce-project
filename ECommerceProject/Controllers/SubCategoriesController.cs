@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ECommerceProject.Data;
 using ECommerceProject.Models;
+using System.Runtime.Intrinsics.X86;
 
 namespace ECommerceProject.Controllers
 {
@@ -34,9 +35,8 @@ namespace ECommerceProject.Controllers
                 return NotFound();
             }
 
-            var subCategory = await _context.SubCategory
-                .Include(s => s.Category)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var subCategory = await _context.SubCategory.Include(s => s.Category)
+                                                        .FirstOrDefaultAsync(m => m.Id == id);
             if (subCategory == null)
             {
                 return NotFound();
@@ -45,12 +45,38 @@ namespace ECommerceProject.Controllers
             return View(subCategory);
         }
 
-        // GET: SubCategories/Create
+        // 1. Use the ViewData and Rajor Syntax for views
+        //public IActionResult Create()
+        //{
+        //    ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "CategoryName");
+        //    return View();
+        //}
+
+        // 2. Use the ViewData and Html for views
+        //public IActionResult Create()
+        //{
+        //    var categories = _context.Category.Select(c => $"<option value='{c.Id}'>{c.CategoryName}</option>").ToList();
+        //    ViewData["CategoryOptions"] = string.Join(",", categories);
+        //    return View();
+        //}
+
+        // 3. Use the ViewBag and Html for views
+        //public IActionResult Create()
+        //{
+        //    ViewBag.CategoryList = new SelectList(_context.Category, "Id", "CategoryName");
+        //    return View();
+        //}
+
+        //4. Use the ViewBag for select option and Html for views
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "CategoryName");
+            var categoryOptions = _context.Category
+                .Select(c => $"<option value='{c.Id}'>{c.CategoryName}</option>")
+                .ToList();
+            ViewBag.CategoryOptions = string.Join("", categoryOptions);
             return View();
         }
+
 
         // POST: SubCategories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
